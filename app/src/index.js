@@ -1,11 +1,14 @@
 import express from 'express'
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import Routes from './Routes/routes.js'
+import cors from 'cors';
+
+import Routes from './Routes/routes.js';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 
 dotenv.config();
@@ -22,4 +25,4 @@ mongoose.connect(process.env.MONGO_DB, {
 
 
 // usage of routes
-app.use('/', Routes)
+app.use('/', Routes);

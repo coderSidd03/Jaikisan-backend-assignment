@@ -1,5 +1,7 @@
-//*============= >>>    Some globally used function     <<< ===============//
+import mongoose from "mongoose";
+// const ObjectId = mongoose.Schema.Types.ObjectId;
 
+//*============= >>>    Some globally used function     <<< ===============//
 
 // >>>> to check that object has keys or not 
 export const checkEmptyBody = (object) => {
@@ -12,6 +14,9 @@ export const isValid = (value) => {
   if (typeof value === "string" && value.trim().length === 0) return false;
   return true;
 };
+
+// ID Validation
+export const isValidObjectId = (ID) => { return mongoose.isValidObjectId(ID) };
 
 // Name Validation
 export const isValidName = (name) => { return ((/^[a-zA-Z ]+$/).test(name)); };
