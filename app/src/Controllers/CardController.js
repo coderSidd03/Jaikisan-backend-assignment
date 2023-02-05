@@ -1,5 +1,5 @@
-import CardModel from '../Models/CardModel'
-import CustomerModel from '../Models/CustomerModel';
+import CardModel from '../Models/CardModel.js'
+import CustomerModel from '../Models/CustomerModel.js';
 
 
 import { checkEmptyBody, isValid, isValidObjectId, isValidName, isValidPhone, isValidEmail } from '../Validation/vaidate.js';
@@ -44,7 +44,7 @@ export const createCard = async (req, res) => {
 
     const card = await CardModel.create(req.body);
     return res.status(201).json({ status: true, message: "card created successfully", data: card });
-    
+
   } catch (error) {
     res.status(500).json({ status: false, error: error.message });
   }
