@@ -110,7 +110,7 @@ export const loginCustomer = async (req, res) => {
 }
 
 // get active customer 
-export const getActiveCustomer = async (req, res) => {
+export const getActiveCustomers = async (req, res) => {
   try {
     const UserIdFromParams = req.params.id;
     if (!isValidObjectId(reqUserId)) return res.status(400).send({ status: false, message: `userId: ${UserIdFromParams}, is invalid.` });
