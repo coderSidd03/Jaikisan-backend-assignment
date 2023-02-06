@@ -12,7 +12,9 @@ const CustomerSchema = new mongoose.Schema({
 
   emailID: { type: String, required: true, trim: true },
 
-  address: { type: String },
+  password: { type: String, required: true, trim: true, min: 8, max: 16 },
+
+  address: { type: String, trim: true },
 
   customerID: { type: String },
 
