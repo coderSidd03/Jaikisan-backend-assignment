@@ -75,16 +75,21 @@ export const createCustomer = async (req, res) => {
 // login for an existing user
 export const loginCustomer = async (req, res) => {
 
-  if (!checkEmptyBody(req.body)) return res.status(400).send({ status: false, message: "please provide email & password" });
+  if (!checkEmptyBody(req.body)) return res.status(400).send({ status: false, message: "please provide emailID & password" });
+
 
   const { emailID, password } = req.body
+
+  if (!isValid(emailID)) return res.status(400).json({ status: false, message: "emailID required" });
+  
+  if (!isValid(password)) return res.status(400).json({ status: false, message: "password required" });
 
   try {
     const user = await CustomerModel.findOne({ emailID: emailID })
 
     if (user) {
       const validity = await bcrypt.compare(password, user.password)
-      if (!validity) res.status(400).json({ status: false, message: "Wrong Password !!" })
+      if (!validity) return res.status(400).json({ status: false, message: "Wrong Password !!" })
 
       const payLoad = {
         userId: user._id.toString(),

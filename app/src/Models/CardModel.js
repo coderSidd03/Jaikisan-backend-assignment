@@ -8,7 +8,7 @@ const CardSchema = new mongoose.Schema({
   status: { type: String, enum: ["ACTIVE", "INACTIVE"], default: "ACTIVE" },
   vision: { type: String },
   customerID: {
-    type: ObjectId,
+    type: String,
     ref: "Customer"
   }
 }, { timestamps: true });
