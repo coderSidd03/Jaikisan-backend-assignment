@@ -81,7 +81,7 @@ export const loginCustomer = async (req, res) => {
   const { emailID, password } = req.body
 
   if (!isValid(emailID)) return res.status(400).json({ status: false, message: "emailID required" });
-  
+
   if (!isValid(password)) return res.status(400).json({ status: false, message: "password required" });
 
   try {
@@ -118,13 +118,18 @@ export const loginCustomer = async (req, res) => {
 export const getActiveCustomers = async (req, res) => {
   try {
     const UserIdFromParams = req.params.id;
-    if (!isValidObjectId(reqUserId)) return res.status(400).send({ status: false, message: `userId: ${UserIdFromParams}, is invalid.` });
+    if (!isValidObjectId(UserIdFromParams)) return res.status(400).send({ status: false, message: `userId: ${UserIdFromParams}, is invalid.` });
 
     // authorizing user
     if (UserIdFromParams !== req.userId) return res.status(403).send({ status: false, message: "Unauthorized user access !!!" });           // 403 - not authorized
 
 
-    const activeCustomers = await CustomerModel.find({ status: "ACTIVE" });
+    const activeCustomers = await CustomerModel.aggregate([
+
+      { $match: { status: 'ACTIVE' } },
+      { $project: { _id: 0, 'firstName': 1, 'lastName': 1, 'address': 1 } }
+    ]);
+
     if (activeCustomers) {
       return res.status(200).json({ status: true, message: "data fetched successfully", data: activeCustomers });
     } else {
